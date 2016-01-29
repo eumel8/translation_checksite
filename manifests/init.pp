@@ -58,6 +58,7 @@ class translation_checksite (
   $rabbit_password   = "password",
   $service_password  = "password",  
   $service_token     = "password",
+  $shutdown          = undef,
 ) {
 
   vcsrepo { "$devstack_dir":
@@ -86,6 +87,23 @@ class translation_checksite (
     timeout   => 3600, 
     require   => [ Vcsrepo["${devstack_dir}"] ],
     logoutput => true
+  }
+
+  if ($shutdown == 1) {
+    exec { "unstack_devstack":
+      cwd       => $devstack_dir,
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
+      timeout   => 600, 
+      logoutput => true
+    }
+    ->
+    exec { "clean_devstack":
+      cwd       => $devstack_dir,
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
+      unless    => "/bin/ps aux | /usr/bin/pgrep stack",
+      timeout   => 300, 
+      logoutput => true
+    }
   }
 
 }

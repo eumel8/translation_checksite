@@ -31,5 +31,11 @@ Install DevStack with parameter:
 
     }
 
+Deinstall DevStack:
+    class {'translation_checksite':
+      devsstack_dir     => "/home/ubuntu/devstack2",
+      stack_user        => "ubuntu",
+      shutdown          => 1, # this stops DevStack and deletes the installation
+    }
 
 Note: Developed for Ubuntu 14.04 LTS
