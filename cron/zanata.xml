@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config xmlns="http://zanata.org/namespace/config/">
+    <url>https://translate.openstack.org:443/</url>
+    <project>horizon</project>
+    <project-version>stable-liberty</project-version>
+    <project-type>gettext</project-type>
+    <src-dir>.</src-dir>
+    <trans-dir>trans</trans-dir>
+    <includes>*</includes>
+    <rules/>
+</config>
