@@ -127,13 +127,13 @@ class translation_checksite (
       require => [ Vcsrepo["${devstack_dir}"] ],
     }
   }
-  ->
+  
   exec { "run_devstack":
     cwd       => $devstack_dir,
     command   => "/bin/su ${stack_user} -c ${devstack_dir}/stack.sh &",
     unless    => "/bin/ps aux | /usr/bin/pgrep stack",
     timeout   => 3600, 
-    require   => [ Vcsrepo["${devstack_dir}"] ],
+    require   => [ Vcsrepo["${devstack_dir}"], File["${devstack_dir}/local.conf"] ],
     logoutput => true
   }
 
