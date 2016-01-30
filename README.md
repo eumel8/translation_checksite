@@ -20,9 +20,9 @@ Usage
 Install DevStack without any plugins:
 
     class {'translation_checksite':
-      minimal           => 1,
-      revision          => "stable/liberty",
-      project_version   => "stable-liberty",
+      minimal           => 1,                 # no extra plugins loaded
+      revision          => "stable/liberty",  # used branch in DevStack Repo
+      project_version   => "stable-liberty",  # used version in Zanata Project
     }
 
 Install DevStack with parameter:
