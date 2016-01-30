@@ -172,7 +172,7 @@ class translation_checksite (
   if ($restack == 1) {
     cron { 'devstack-restack':
       ensure   => present,
-      command  => "${devstack_dir}/unstack.sh &&  ${devstack_dir}/stack.sh",
+      command  => "cd ${devstack_dir}; ./unstack.sh && ./stack.sh",
       user     => "${stack_user}",
       hour     => "${restack_hour}",
       minute   => "${restack_minute}",

@@ -31,9 +31,11 @@ Install DevStack with parameter:
       rabbit_password   => "34343434",
       service_password  => "56565656",
       service_token     => "78787878787878",
-      sync_hour         => 13,
+      sync_hour         => 18,
       sync_minute       => 30,
-
+      restack           => 1, # refresh DevStack installation
+      restack_hour      => 18,
+      restack_minute    => 00,
     }
 
 Deinstall DevStack:
