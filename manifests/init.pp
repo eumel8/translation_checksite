@@ -134,7 +134,7 @@ class translation_checksite (
 
   cron { 'zanata-sync':
     ensure   => present,
-    command  => "/usr/bin/rsync -a --delete /data/vmail/* tewa.eumelvpn.local::data/vmail",
+    command  => "${zanata_cli} -B -q pull",
     user     => "${stack_user}",
     hour     => "${sync_hour}",
     minute   => "${sync_minute}",
