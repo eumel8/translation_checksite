@@ -3,7 +3,7 @@
     <url>https://translate.openstack.org:443/</url>
     <project>horizon</project>
     <project-version>stable-liberty</project-version>
-    <project-type>gettext</project-type>
+    <project-type>podir</project-type>
     <src-dir>.</src-dir>
     <trans-dir>trans</trans-dir>
     <includes>*</includes>
