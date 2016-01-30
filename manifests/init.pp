@@ -166,6 +166,7 @@ class translation_checksite (
 
   cron { 'zanata-sync':
     ensure   => present,
+    path     => '/bin:/usr/bin:/usr/local/bin',
     command  => "/home/${stack_user}/zanata-sync.sh",
     user     => "${stack_user}",
     hour     => "${sync_hour}",
@@ -175,6 +176,7 @@ class translation_checksite (
   if ($shutdown == 1) {
     exec { "unstack_devstack":
       cwd       => $devstack_dir,
+      path      => '/bin:/usr/bin:/usr/local/bin',
       command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
       timeout   => 600,
       logoutput => true
@@ -182,6 +184,7 @@ class translation_checksite (
     ->
     exec { "clean_devstack":
       cwd       => $devstack_dir,
+      path      => '/bin:/usr/bin:/usr/local/bin',
       command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
       unless    => "/bin/ps aux | /usr/bin/pgrep stack",
       timeout   => 300,
@@ -192,6 +195,7 @@ class translation_checksite (
   if ($restack == 1) {
     cron { 'devstack-restack':
       ensure   => present,
+      path     => '/bin:/usr/bin:/usr/local/bin',
       command  => "cd ${devstack_dir}; ./unstack.sh && ./stack.sh",
       user     => "${stack_user}",
       hour     => "${restack_hour}",
