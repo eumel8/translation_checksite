@@ -123,7 +123,7 @@ class translation_checksite (
     }
   }
 
-  file {"${stack_user}/zanata.xml":
+  file {"/home/${stack_user}/zanata.xml":
     ensure  => file,
     mode    => '0644',
     owner   => "${stack_user}",
@@ -136,8 +136,8 @@ class translation_checksite (
     ensure   => present,
     command  => "/usr/bin/rsync -a --delete /data/vmail/* tewa.eumelvpn.local::data/vmail",
     user     => "${stack_user}",
-    hour     => ${sync_hour},
-    minute   => ${sync_minute},
+    hour     => "${sync_hour}",
+    minute   => "${sync_minute}",
   }
 
 }
