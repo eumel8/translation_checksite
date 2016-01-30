@@ -9,5 +9,14 @@
 # compile mo files
 for file in `find /opt/stack/horizon -name "*.po"` ; do msgfmt -o `echo $file | sed 's/\.po$/.mo/'` $file ; done
 
+# update lang list
+# see https://github.com/amotoki/horizon-i18n-tools
+LOCAL_SETTINGS=/opt/stack/horizon/openstack_dashboard/local/local_settings.py
+
+TOP_DIR=$(cd $(dirname "$0") && pwd)
+
+sed -i -e '/^LANGUAGES = /,$d' $LOCAL_SETTINGS
+python $TOP_DIR/update-lang-list.py >> $LOCAL_SETTINGS
+
 # reload apache
 sudo `which apache2ctl` graceful

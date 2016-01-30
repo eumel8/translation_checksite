@@ -57,6 +57,13 @@
 # [*shutdown*]
 # Shutdown and delete DevStack
 #
+# [*restack*]
+# daily cron to unstack and stack 
+#
+# [*restack_hour*]
+# [*restack_minute*]
+# configure cron to restack the environment
+#
 # === Authors
 #
 # Frank Kloeker <f.kloeker@telekom.de>
@@ -74,9 +81,12 @@ class translation_checksite (
   $rabbit_password   = "password",
   $service_password  = "password",  
   $service_token     = "password",
-  $sync_hour         = 0,
+  $sync_hour         = 1,
   $sync_minute       = 0,
   $shutdown          = undef,
+  $restack           = undef,
+  $restack_hour      = 0,
+  $restack_minute    = 0,
 ) {
 
   vcsrepo { "$devstack_dir":
@@ -107,23 +117,6 @@ class translation_checksite (
     logoutput => true
   }
 
-  if ($shutdown == 1) {
-    exec { "unstack_devstack":
-      cwd       => $devstack_dir,
-      command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
-      timeout   => 600, 
-      logoutput => true
-    }
-    ->
-    exec { "clean_devstack":
-      cwd       => $devstack_dir,
-      command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
-      unless    => "/bin/ps aux | /usr/bin/pgrep stack",
-      timeout   => 300, 
-      logoutput => true
-    }
-  }
-
   file {"/home/${stack_user}/zanata.xml":
     ensure  => file,
     mode    => '0644',
@@ -142,6 +135,15 @@ class translation_checksite (
     force   => true,
   }
 
+  file {"/home/${stack_user}/update-lang-list.py":
+    ensure  => file,
+    mode    => '0755',
+    owner   => "${stack_user}",
+    group   => "${stack_user}",
+    content => file('translation_checksite/update-lang-list.py')
+    force   => true,
+  }
+
   cron { 'zanata-sync':
     ensure   => present,
     command  => "/home/${stack_user}/zanata-sync.sh",
@@ -150,4 +152,30 @@ class translation_checksite (
     minute   => "${sync_minute}",
   }
 
+  if ($shutdown == 1) {
+    exec { "unstack_devstack":
+      cwd       => $devstack_dir,
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
+      timeout   => 600, 
+      logoutput => true
+    }
+    ->
+    exec { "clean_devstack":
+      cwd       => $devstack_dir,
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
+      unless    => "/bin/ps aux | /usr/bin/pgrep stack",
+      timeout   => 300, 
+      logoutput => true
+    }
+  }
+
+  if ($restack == 1) {
+    cron { 'devstack-restack':
+      ensure   => present,
+      command  => "${devstack_dir}/unstack.sh &&  ${devstack_dir}/stack.sh",
+      user     => "${stack_user}",
+      hour     => "${restack_hour}",
+      minute   => "${restack_minute}",
+    }
+  }
 }
