@@ -165,12 +165,12 @@ class translation_checksite (
   }
 
   cron { 'zanata-sync':
-    ensure   => present,
-    path     => '/bin:/usr/bin:/usr/local/bin',
-    command  => "/home/${stack_user}/zanata-sync.sh",
-    user     => "${stack_user}",
-    hour     => "${sync_hour}",
-    minute   => "${sync_minute}",
+    ensure      => present,
+    environment => 'PATH=/bin:/usr/bin:/usr/local/bin',
+    command     => "/home/${stack_user}/zanata-sync.sh",
+    user        => "${stack_user}",
+    hour        => "${sync_hour}",
+    minute      => "${sync_minute}",
   }
 
   if ($shutdown == 1) {
@@ -194,12 +194,12 @@ class translation_checksite (
 
   if ($restack == 1) {
     cron { 'devstack-restack':
-      ensure   => present,
-      path     => '/bin:/usr/bin:/usr/local/bin',
-      command  => "cd ${devstack_dir}; ./unstack.sh && ./stack.sh",
-      user     => "${stack_user}",
-      hour     => "${restack_hour}",
-      minute   => "${restack_minute}",
+      ensure      => present,
+      environment => 'PATH=/bin:/usr/bin:/usr/local/bin',
+      command     => "cd ${devstack_dir}; ./unstack.sh && ./stack.sh",
+      user        => "${stack_user}",
+      hour        => "${restack_hour}",
+      minute      => "${restack_minute}",
     }
   }
 }
