@@ -86,7 +86,7 @@ class translation_checksite (
   $admin_password    = "password",
   $database_password = "password",
   $rabbit_password   = "password",
-  $service_password  = "password",  
+  $service_password  = "password",
   $service_token     = "password",
   $swift_hash        = "password",
   $sync_hour         = 1,
@@ -116,7 +116,7 @@ class translation_checksite (
       force   => true,
       require => [ Vcsrepo["${devstack_dir}"] ],
     }
-  } else { 
+  } else {
     file {"${devstack_dir}/local.conf":
       ensure  => file,
       mode    => '0600',
@@ -132,7 +132,7 @@ class translation_checksite (
     cwd       => $devstack_dir,
     command   => "/bin/su ${stack_user} -c ${devstack_dir}/stack.sh &",
     unless    => "/bin/ps aux | /usr/bin/pgrep stack",
-    timeout   => 3600, 
+    timeout   => 3600,
     require   => [ Vcsrepo["${devstack_dir}"], File["${devstack_dir}/local.conf"] ],
     logoutput => true
   }
@@ -176,7 +176,7 @@ class translation_checksite (
     exec { "unstack_devstack":
       cwd       => $devstack_dir,
       command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
-      timeout   => 600, 
+      timeout   => 600,
       logoutput => true
     }
     ->
@@ -184,7 +184,7 @@ class translation_checksite (
       cwd       => $devstack_dir,
       command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
       unless    => "/bin/ps aux | /usr/bin/pgrep stack",
-      timeout   => 300, 
+      timeout   => 300,
       logoutput => true
     }
   }
