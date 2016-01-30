@@ -17,6 +17,13 @@ https://github.com/puppetlabs/puppetlabs-vcsrepo
 Usage
 -----
 
+Install DevStack without any plugins:
+
+    class {'translation_checksite':
+      minimal           => 1,
+      revision          => "stable/liberty",
+      project_version   => "stable-liberty",
+    }
 
 Install DevStack with parameter:
 
@@ -24,13 +31,14 @@ Install DevStack with parameter:
       zanata_cli        => "/opt/zanata/zanata-cli-3.8.1/bin/zanata-cli",
       devsstack_dir     => "/home/ubuntu/devstack2",
       stack_user        => "ubuntu",
-      revision          => "stable/liberty",
-      project_version   => "stable-liberty",
+      revision          => "master",
+      project_version   => "master",
       admin_password    => "12345678",
       database_password => "12121212",
       rabbit_password   => "34343434",
       service_password  => "56565656",
       service_token     => "78787878787878",
+      swift_hash        => "78787878787878",
       sync_hour         => 18,
       sync_minute       => 30,
       restack           => 1, # refresh DevStack installation

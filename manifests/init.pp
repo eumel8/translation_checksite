@@ -18,11 +18,14 @@
 #
 # === Variables
 #
-# [*zanata_cli*]
-# Location of Zanata Client
-#
 # [*devstack_dir*]
 # Destination of DevStack installation
+#
+# [*minimal*]
+# Minimal DevStack installation without plugins
+#
+# [*zanata_cli*]
+# Location of Zanata Client
 #
 # [*stack_user*]
 # Unix user of DecStack installation
@@ -50,6 +53,9 @@
 # [*service_token*]
 # Password of service token
 #
+# [*swift_hash*]
+# Password of swift hash
+#
 # [*sync_hour*]
 # [*sync_minute*]
 # configure cron to sync translation files from Zanata
@@ -72,6 +78,7 @@
 
 class translation_checksite (
   $devstack_dir      = "/home/ubuntu/devstack",
+  $minimal           = undef,
   $zanata_cli        = "/opt/zanata/zanata-cli-3.8.1/bin/zanata-cli",
   $stack_user        = "ubuntu",
   $revision          = "master",
@@ -81,6 +88,7 @@ class translation_checksite (
   $rabbit_password   = "password",
   $service_password  = "password",  
   $service_token     = "password",
+  $swift_hash        = "password",
   $sync_hour         = 1,
   $sync_minute       = 0,
   $shutdown          = undef,
@@ -98,14 +106,26 @@ class translation_checksite (
     revision => "${revision}",
   }
 
-  file {"${devstack_dir}/local.conf":
-    ensure  => file,
-    mode    => '0600',
-    owner   => "${stack_user}",
-    group   => "${stack_user}",
-    content => template('translation_checksite/local.conf.erb'),
-    force   => true,
-    require => [ Vcsrepo["${devstack_dir}"] ],
+  if ($minimal == 1) {
+    file {"${devstack_dir}/local.conf":
+      ensure  => file,
+      mode    => '0600',
+      owner   => "${stack_user}",
+      group   => "${stack_user}",
+      content => template('translation_checksite/local.conf.minimal.erb'),
+      force   => true,
+      require => [ Vcsrepo["${devstack_dir}"] ],
+    }
+  } else { 
+    file {"${devstack_dir}/local.conf":
+      ensure  => file,
+      mode    => '0600',
+      owner   => "${stack_user}",
+      group   => "${stack_user}",
+      content => template('translation_checksite/local.conf.erb'),
+      force   => true,
+      require => [ Vcsrepo["${devstack_dir}"] ],
+    }
   }
   ->
   exec { "run_devstack":
