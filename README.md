@@ -11,8 +11,43 @@ Features
 Requirements
 ------------
 
+For usage devstack git repo:
+
 https://github.com/puppetlabs/puppetlabs-vcsrepo
 
+For installing Zanata Client:
+
+https://github.com/puppetlabs/puppetlabs-java_ks.git
+
+https://git.openstack.org/openstack-infra/puppet-zanata
+
+
+Prerequisites for installing Zanata CLI
+---------------------------------------
+
+    user { "ubuntu":
+      ensure     => 'present',
+      uid        => 1000,
+      groups     => 'ubuntu',
+      comment    => "Ubuntu User",
+      managehome => false,
+      shell      => '/bin/bash',
+      password   => '*',
+    }
+    ->
+    file { '/home/ubuntu/.config':
+      ensure  => directory,
+    }
+    class {'zanata::client':
+      version        => '3.8.1',
+      user           => 'ubuntu',
+      group          => 'ubuntu',
+      server         => 'openstack',
+      server_url     => 'https://translate.openstack.org:443',
+      server_user    => 'user',
+      server_api_key => '12345',
+      homedir        => '/home/ubuntu/',
+    }
 
 Usage
 -----
