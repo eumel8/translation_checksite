@@ -37,6 +37,7 @@ Install DevStack with parameter:
     }
 
 Deinstall DevStack:
+
     class {'translation_checksite':
       devsstack_dir     => "/home/ubuntu/devstack2",
       stack_user        => "ubuntu",
