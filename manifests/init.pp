@@ -61,6 +61,12 @@ class translation_checksite (
   $shutdown          = undef,
 ) {
 
+  class { '::zanata::client':
+    server_url     => $zanata_server_url,
+    server_user    => $zanata_server_user,
+    server_api_key => $zanata_server_api_key,
+  }
+
   vcsrepo { "$devstack_dir":
     ensure   => present,
     provider => git,
