@@ -26,6 +26,7 @@
 #
 # [*stack_user*]
 # Unix user of DecStack installation
+# needs sudo rights without password
 #
 # [*revision*]
 # used branch (check https://github.com/openstack-dev/devstack.git 
@@ -132,9 +133,18 @@ class translation_checksite (
     force   => true,
   }
 
+  file {"/home/${stack_user}/zanata-sync.sh":
+    ensure  => file,
+    mode    => '0755',
+    owner   => "${stack_user}",
+    group   => "${stack_user}",
+    content => template('translation_checksite/zanata-sync.sh.erb'),
+    force   => true,
+  }
+
   cron { 'zanata-sync':
     ensure   => present,
-    command  => "${zanata_cli} -B -q pull",
+    command  => "/home/${stack_user}/zanata-sync.sh",
     user     => "${stack_user}",
     hour     => "${sync_hour}",
     minute   => "${sync_minute}",
