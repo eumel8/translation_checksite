@@ -160,7 +160,7 @@ class translation_checksite (
     mode    => '0755',
     owner   => "${stack_user}",
     group   => "${stack_user}",
-    source  => file('translation_checksite/update-lang-list.py'),
+    source  => 'puppet:///modules/translation_checksite/update-lang-list.py',
     force   => true,
   }
 
