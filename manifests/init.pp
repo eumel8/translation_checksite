@@ -160,7 +160,7 @@ class translation_checksite (
     mode    => '0755',
     owner   => "${stack_user}",
     group   => "${stack_user}",
-    content => file('translation_checksite/update-lang-list.py')
+    content => file('translation_checksite/update-lang-list.py'),
     force   => true,
   }
 
