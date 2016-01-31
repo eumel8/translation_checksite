@@ -32,7 +32,7 @@
 # needs sudo rights without password
 #
 # [*revision*]
-# used branch (check https://github.com/openstack-dev/devstack.git 
+# used branch (check https://git.opentsack.org/openstack-dev/devstack.git 
 # for available branches )
 #
 # [*project_version*]
@@ -102,7 +102,7 @@ class translation_checksite (
     provider => git,
     owner    => "${stack_user}",
     group    => "${stack_user}",
-    source   => 'https://github.com/openstack-dev/devstack.git',
+    source   => 'https://git.openstack.org/openstack-dev/devstack.git',
     revision => "${revision}",
   }
 
