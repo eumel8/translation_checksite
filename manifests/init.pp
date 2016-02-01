@@ -32,7 +32,7 @@
 # needs sudo rights without password
 #
 # [*revision*]
-# used branch (check https://git.opentsack.org/openstack-dev/devstack.git 
+# used branch (check https://git.opentsack.org/openstack-dev/devstack.git
 # for available branches )
 #
 # [*project_version*]
@@ -49,7 +49,7 @@
 #
 # [*service_password*]
 # Password of services
-# 
+#
 # [*service_token*]
 # Password of service token
 #
@@ -64,7 +64,7 @@
 # Shutdown and delete DevStack
 #
 # [*restack*]
-# daily cron to unstack and stack 
+# daily cron to unstack and stack
 #
 # [*restack_hour*]
 # [*restack_minute*]
@@ -101,51 +101,51 @@ class translation_checksite (
   $restack_minute    = 0,
 ) {
 
-  vcsrepo { '$devstack_dir':
+  vcsrepo { $devstack_dir:
     ensure   => present,
     provider => git,
-    owner    => '${stack_user}',
-    group    => '${stack_user}',
+    owner    => $stack_user,
+    group    => $stack_user,
     source   => 'https://git.openstack.org/openstack-dev/devstack.git',
-    revision => '${revision}',
+    revision => $revision,
   }
 
   if ($minimal == 1) {
     file {"${devstack_dir}/local.conf":
       ensure  => file,
       mode    => '0600',
-      owner   => '${stack_user}',
-      group   => '${stack_user}',
+      owner   => $stack_user,
+      group   => $stack_user,
       content => template('translation_checksite/local.conf.minimal.erb'),
       force   => true,
-      require => [ Vcsrepo['${devstack_dir}'] ],
+      require => [ Vcsrepo[$devstack_dir] ],
     }
   } else {
     file {"${devstack_dir}/local.conf":
       ensure  => file,
       mode    => '0600',
-      owner   => '${stack_user}',
-      group   => '${stack_user}',
+      owner   => $stack_user,
+      group   => $stack_user,
       content => template('translation_checksite/local.conf.erb'),
       force   => true,
-      require => [ Vcsrepo['${devstack_dir}'] ],
+      require => [ Vcsrepo[$devstack_dir] ],
     }
   }
-  
+
   exec { 'run_devstack':
     cwd       => $devstack_dir,
     command   => "/bin/su ${stack_user} -c ${devstack_dir}/stack.sh &",
     unless    => '/bin/ps aux | /usr/bin/pgrep stack',
     timeout   => 3600,
-    require   => [ Vcsrepo['${devstack_dir}'], File["${devstack_dir}/local.conf"] ],
+    require   => [ Vcsrepo[$devstack_dir], File["${devstack_dir}/local.conf"] ],
     logoutput => true
   }
 
   file {"/home/${stack_user}/zanata.xml":
     ensure  => file,
     mode    => '0644',
-    owner   => '${stack_user}',
-    group   => '${stack_user}',
+    owner   => $stack_user,
+    group   => $stack_user,
     content => template('translation_checksite/zanata.xml.erb'),
     force   => true,
   }
@@ -153,8 +153,8 @@ class translation_checksite (
   file {"/home/${stack_user}/zanata-sync.sh":
     ensure  => file,
     mode    => '0755',
-    owner   => '${stack_user}',
-    group   => '${stack_user}',
+    owner   => $stack_user,
+    group   => $stack_user,
     content => template('translation_checksite/zanata-sync.sh.erb'),
     force   => true,
   }
@@ -162,8 +162,8 @@ class translation_checksite (
   file {"/home/${stack_user}/update-lang-list.py":
     ensure => file,
     mode   => '0755',
-    owner  => '${stack_user}',
-    group  => '${stack_user}',
+    owner  => $stack_user,
+    group  => $stack_user,
     source => 'puppet:///modules/translation_checksite/update-lang-list.py',
     force  => true,
   }
@@ -172,9 +172,9 @@ class translation_checksite (
     ensure      => present,
     environment => 'PATH=/bin:/usr/bin:/usr/local/bin',
     command     => "/home/${stack_user}/zanata-sync.sh",
-    user        => '${stack_user}',
-    hour        => '${sync_hour}',
-    minute      => '${sync_minute}',
+    user        => $stack_user,
+    hour        => $sync_hour,
+    minute      => $sync_minute,
   }
 
   if ($shutdown == 1) {
@@ -201,9 +201,9 @@ class translation_checksite (
       ensure      => present,
       environment => 'PATH=/bin:/usr/bin:/usr/local/bin',
       command     => "cd ${devstack_dir}; ./unstack.sh && ./stack.sh",
-      user        => '${stack_user}',
-      hour        => '${restack_hour}',
-      minute      => '${restack_minute}',
+      user        => $stack_user,
+      hour        => $restack_hour,
+      minute      => $restack_minute,
     }
   }
 }
