@@ -72,6 +72,10 @@
 #
 # === Authors
 #
+# Ying Chin Gua <guoyingc@cn.ibm.com>
+# KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>
+# Ian Y. CHoi <ianyrchoi@gmail.com>
+# Akihiro Motoki <amotoki@gmail.com>
 # Frank Kloeker <f.kloeker@telekom.de>
 #
 #
