@@ -11,7 +11,7 @@ USE_NEUTRON=True
 
 #disable_service cinder c-sch c-api c-vol
 enable_service c-bak
-disable_service tempest
+# disable_service tempest
 #disable_service horizon
 enable_service heat h-api h-api-cfn h-api-cw h-eng
 enable_service ceilometer-acompute ceilometer-acentral ceilometer-collector ceilometer-api
@@ -19,6 +19,19 @@ enable_service s-proxy s-object s-container s-account
 enable_service trove tr-api tr-tmgr tr-cond
 enable_service sahara
 #enable_service zaqar-server
+enable_service tempest
+# enable_plugin manila https://github.com/openstack/manila
+
+enable_plugin rally https://github.com/openstack/rally
+
+
+# Enable the aodh alarming services
+# enable_plugin aodh https://git.openstack.org/openstack/aodh
+# enable_service aodh-evaluator,aodh-notifier,aodh-api
+# disable_service ceilometer-alarm-notifier,ceilometer-alarm-evaluator
+
+enable_plugin app-catalog-ui https://github.com/openstack/app-catalog-ui
+
 
 LIBS_FROM_GIT=django_openstack_auth
 
