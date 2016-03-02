@@ -36,6 +36,7 @@ enable_plugin trove-dashboard https://git.openstack.org/openstack/trove-dashboar
 
 enable_plugin neutron https://git.openstack.org/openstack/neutron
 enable_plugin neutron-lbaas https://git.openstack.org/openstack/neutron-lbaas
+enable_plugin octavia  https://git.openstack.org/openstack/octavia
 enable_plugin neutron-lbaas-dashboard https://git.openstack.org/openstack/neutron-lbaas-dashboard
 enable_plugin neutron-vpnaas https://git.openstack.org/openstack/neutron-vpnaas
 enable_plugin neutron-fwaas https://git.openstack.org/openstack/neutron-fwaas
@@ -75,7 +76,7 @@ if [[ "$USE_NEUTRON" == "True" ]]; then
   enable_service q-l3
   enable_service q-meta
 #  enable_service q-lbaas
-#  enable_service q-fwaas
+  enable_service q-fwaas
 #  enable_service q-vpn
   enable_service q-metering
 
