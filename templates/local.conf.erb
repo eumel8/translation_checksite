@@ -40,7 +40,8 @@ enable_plugin octavia  https://git.openstack.org/openstack/octavia
 enable_plugin neutron-lbaas-dashboard https://git.openstack.org/openstack/neutron-lbaas-dashboard
 enable_plugin neutron-vpnaas https://git.openstack.org/openstack/neutron-vpnaas
 
-ENABLED_SERVICES+=q-lbaasv2,octavia,o-api,o-cw,o-hk,o-hm
+ENABLED_SERVICES+=,q-lbaasv2
+ENABLED_SERVICES+=,octavia,o-cw,o-hk,o-hm,o-api
 
 # Enable the aodh alarming services
 # enable_plugin aodh https://git.openstack.org/openstack/aodh
