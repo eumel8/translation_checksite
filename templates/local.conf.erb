@@ -22,24 +22,25 @@ enable_service sahara
 enable_service tempest
 # enable_plugin manila https://github.com/openstack/manila
 
+
 enable_plugin rally https://git.openstack.org/openstack/rally
+
 enable_plugin murano https://git.openstack.org/openstack/murano
 enable_plugin murano-dashboard https://git.openstack.org/openstack/murano-dashboard
-enable_plugin monasca-ui https://git.openstack.org/openstack/monasca-ui
-enable_plugin magnum-ui https://git.openstack.org/openstack/magnum-ui
-enable_plugin senlin-dashboard https://git.openstack.org/openstack/senlin-dashboard
-enable_plugin designate-dashboard https://git.openstack.org/openstack/designate-dashboard
+
+enable_plugin trove https://git.openstack.org/openstack/trove
+enable_plugin trove-dashboard https://git.openstack.org/openstack/trove-dashboard
 
 enable_plugin sahara https://git.openstack.org/openstack/sahara
 enable_plugin sahara-dashboard https://git.openstack.org/openstack/sahara-dashboard
-enable_plugin trove-dashboard https://git.openstack.org/openstack/trove-dashboard
 
 enable_plugin neutron https://git.openstack.org/openstack/neutron
 enable_plugin neutron-lbaas https://git.openstack.org/openstack/neutron-lbaas
 enable_plugin octavia  https://git.openstack.org/openstack/octavia
 enable_plugin neutron-lbaas-dashboard https://git.openstack.org/openstack/neutron-lbaas-dashboard
 enable_plugin neutron-vpnaas https://git.openstack.org/openstack/neutron-vpnaas
-enable_plugin neutron-fwaas https://git.openstack.org/openstack/neutron-fwaas
+
+ENABLED_SERVICES+=q-lbaasv2,octavia,o-api,o-cw,o-hk,o-hm
 
 # Enable the aodh alarming services
 # enable_plugin aodh https://git.openstack.org/openstack/aodh
