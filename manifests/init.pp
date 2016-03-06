@@ -134,7 +134,7 @@ class translation_checksite (
 
   exec { 'run_devstack':
     cwd       => $devstack_dir,
-    command   => "/bin/su ${stack_user} -c ${devstack_dir}/stack.sh &",
+    command   => "/bin/su ${stack_user} -c ${devstack_dir}/stack.sh",
     unless    => [
                    '/bin/ps aux | /usr/bin/pgrep stack 2>/dev/null',
                    '/usr/bin/test -d /opt/stack/'
