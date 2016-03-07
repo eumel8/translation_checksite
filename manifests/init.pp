@@ -184,7 +184,7 @@ class translation_checksite (
     exec { 'unstack_devstack':
       cwd       => $devstack_dir,
       path      => '/bin:/usr/bin:/usr/local/bin',
-      command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh &",
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/unstack.sh",
       timeout   => 600,
       logoutput => true
     }
@@ -192,7 +192,7 @@ class translation_checksite (
     exec { 'clean_devstack':
       cwd       => $devstack_dir,
       path      => '/bin:/usr/bin:/usr/local/bin',
-      command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh &",
+      command   => "/bin/su ${stack_user} -c ${devstack_dir}/clean.sh",
       unless    => '/bin/ps aux | /usr/bin/pgrep stack',
       timeout   => 300,
       logoutput => true
