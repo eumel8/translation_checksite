@@ -7,7 +7,7 @@ cat <<EOF > /tmp/osa_install.pp
 #!/usr/bin/puppet apply 
 node default {
 
-  \$admin_email = 'f.kloeker@telekom.de'
+  \$admin_email = 'root@localhost'
   \$branch = 'master'
 
   exec { 'apt_install_pkg':
