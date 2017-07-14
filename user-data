@@ -63,7 +63,7 @@ node default {
   }
 
   exec { 'send admin password':
-    command => "/bin/echo $(grep keystone_auth_admin_password /etc/openstack_deploy/user_secrets.yml) | /usr/bin/mail -s 'password_$(hostname)' \${admin_email}",
+    command => "/bin/echo \$(grep keystone_auth_admin_password /etc/openstack_deploy/user_secrets.yml) | /usr/bin/mail -s 'password_$(hostname)' \${admin_email}",
     require => Exec['install_aio'],
   }
 
