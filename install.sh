@@ -21,7 +21,7 @@ node default {
     creates => '/opt/openstack-ansible',
   }
 
-  cron {'zanata-sync':
+  cron {'zanata_sync':
     ensure  => present,
     command => 'cd /opt/openstack-ansible/playbooks; openstack-ansible os-horizon-install.yml -e "horizon_translations_update=True" --tags "horizon-config"',
     user    => 'root',
@@ -37,7 +37,7 @@ node default {
     timeout => 0,
   }
 
-  exec { 'send admin password':
+  exec { 'send_admin_password':
     command => "/bin/echo \$(grep keystone_auth_admin_password /etc/openstack_deploy/user_secrets.yml) | /usr/bin/mail -s 'password_$(hostname)' \${admin_email}",
     require => Exec['install_aio'],
   }
@@ -50,4 +50,3 @@ chmod +x /tmp/osa_install.pp
 
 # install new ssl cert
 # cd /opt/openstack-ansible/playbooks; ansible-playbook haproxy-install.yml -e "haproxy_user_ssl_cert=/etc/ssl/certs/server.crt" -e "haproxy_user_ssl_key=/etc/ssl/private/server.key" -e "haproxy_user_ssl_ca_cert=/etc/ssl/certs/ca.crt"
-

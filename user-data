@@ -46,7 +46,7 @@ node default {
     creates => '/opt/openstack-ansible',
   }
 
-  cron {'zanata-sync':
+  cron {'zanata_sync':
     ensure  => present,
     command => 'cd /opt/openstack-ansible/playbooks; openstack-ansible os-horizon-install.yml -e "horizon_translations_update=True" --tags "horizon-config"',
     user    => 'root',
@@ -62,7 +62,7 @@ node default {
     timeout => 0,
   }
 
-  exec { 'send admin password':
+  exec { 'send_admin_password':
     command => "/bin/echo \$(grep keystone_auth_admin_password /etc/openstack_deploy/user_secrets.yml) | /usr/bin/mail -s 'password_$(hostname)' \${admin_email}",
     require => Exec['install_aio'],
   }
