@@ -1,11 +1,19 @@
 Translation_checksite for OpenStack I18N
 ========================================
 
-Puppet manifest to install OpenStack-Ansible with translation checksite feature.
+Installation on Open Telekom Cloud:
+-----------------------------------
 
-usage:
-======
+```
+    ansible-playbook tenant_create.yml -e "ecs_name=i18n" -e "ecs_user_data=$(base64 -w 0 user-data )"
+```
 
-./install.sh
+
+Local installation:
+-------------------
+
+```
+    ./install.sh
+```
 
 hint: with self-signed certificate
