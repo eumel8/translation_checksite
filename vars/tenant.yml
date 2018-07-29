@@ -1,0 +1,34 @@
+---
+default:
+  image_name: "Standard_Ubuntu_16.04_latest"
+  availability_zone: "eu-de-01"
+  evs_availability_zone: "eu-de-01"
+  vpc_name: "i18n"
+  vpc_net: "192.168.0.0/16"
+  subnet_name: "i18n-subnet"
+  subnet_net: "192.168.0.0/24"
+  subnet_gateway: "192.168.0.1"
+  subnet_dhcp_enable: "true"
+  subnet_primary_dns: "100.125.4.25"
+  subnet_secondary_dns: "8.8.8.8"
+vms:
+  i18n:
+    vpc_name: "i18n"
+    ecs_volumesize: 100
+    ecs_volumetype: "SSD"
+    secgroups: 
+      - "i18n-default"
+    ecs_publicip: "160.44.196.144"
+    eip_bandwidth_name: "eip-i18n"
+    eip_bandwidth_size: "500"
+    ecs_ram: "8196"
+    ecs_vcpus: "4"
+    ecs_adminkey: "i18n-key"
+    keypair_file: "~/.ssh/i18n_team.pub"
+securitygroups:
+  i18n-default:
+    - "ingress;IPv4;tcp;22;22;0.0.0.0/0"
+    - "ingress;IPv4;tcp;80;80;0.0.0.0/0"
+    - "ingress;IPv4;tcp;81;81;0.0.0.0/0"
+    - "ingress;IPv4;tcp;443;443;0.0.0.0/0"
+    - "egress;IPv4;0;;;0.0.0.0/0"
