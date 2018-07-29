@@ -2,5 +2,6 @@
 .eggs/
 .tox/
 roles/
+ansibe-otc/
 AUTHORS
 ChangeLog
