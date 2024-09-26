@@ -1,5 +1,5 @@
-Translation_checksite for OpenStack I18N
-========================================
+Translation_checksite for OpenStack I18N (retired)
+==================================================
 
 This puppet module provides environment for check translation in OpenStack
 
